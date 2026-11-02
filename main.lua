@@ -1,30 +1,19 @@
-local grid = {}
-
-local function generateNoiseGrid()
-	-- Fill each tile in our grid with noise.
-	local baseX = 10000 * love.math.random()
-	local baseY = 10000 * love.math.random()
-	for y = 1, 60 do
-		grid[y] = {}
-		for x = 1, 90 do
-			grid[y][x] = love.math.noise(baseX+.1*x, baseY+.2*y)
-		end
-	end
-end
-
 function love.load()
-	generateNoiseGrid()
-end
-function love.update()
-	generateNoiseGrid()
+	love.window.setTitle("Testing LOVE")
+	love.graphics.setDefaultFilter("nearest", "nearest")
+
+	player = {}
+	player.x = 0
+	player.y = 0
+	player.width = 2 
+	player.height = 2 
+	player.sprite = love.graphics.newImage("Jump (32x32).png")
 end
 
 function love.draw()
-	local tileSize = 8
-	for y = 1, #grid do
-		for x = 1, #grid[y] do
-			love.graphics.setColor(1, 1, 1, grid[y][x])
-			love.graphics.rectangle("fill", x*tileSize, y*tileSize, tileSize-1, tileSize-1)
-		end
-	end
+	love.graphics.draw(player.sprite, player.x, player.y, 0, player.width, player.height)
+end
+
+function love.update(dt)
+	player.y = player.y + 400 * dt
 end
